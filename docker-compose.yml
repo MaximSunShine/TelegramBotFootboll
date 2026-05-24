@@ -12,14 +12,14 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./migrations:/docker-entrypoint-initdb.d  # опционально: авто-инит
+      - ./migrations:/docker-entrypoint-initdb.d  # РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ: Р°РІС‚Рѕ-РёРЅРёС‚
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U bot_user -d football_bot"]
       interval: 5s
       timeout: 5s
       retries: 5
 
-  # Опционально: pgAdmin для визуального управления БД
+  # РћРїС†РёРѕРЅР°Р»СЊРЅРѕ: pgAdmin РґР»СЏ РІРёР·СѓР°Р»СЊРЅРѕРіРѕ СѓРїСЂР°РІР»РµРЅРёСЏ Р‘Р”
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: football_bot_pgadmin
