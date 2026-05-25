@@ -1,12 +1,12 @@
 package main
 
 import (
+	"TelegramBotFootboll/internal/model"
 	"context"
 	"log/slog"
 	"os"
 	"os/signal"
 	"syscall"
-	"tg-bot/internal/model"
 	"time"
 
 	"TelegramBotFootboll/internal/bot"

@@ -1,4 +1,4 @@
-module tg-bot
+module github.com/MaximSunShine/TelegramBotFootboll
 
 go 1.26.3
 
