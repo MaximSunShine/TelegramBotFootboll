@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"TelegramBotFootboll/internal/model"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
 )
 
 // PredictService определяет бизнес-логику для работы с прогнозами

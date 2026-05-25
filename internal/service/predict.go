@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"TelegramBotFootboll/internal/model"
-	"TelegramBotFootboll/internal/repository"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/repository"
 )
 
 // Ошибки сервиса

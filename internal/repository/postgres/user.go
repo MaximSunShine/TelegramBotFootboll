@@ -7,7 +7,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"TelegramBotFootboll/internal/model"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
 )
 
 // userRepository реализует UserRepository для PostgreSQL

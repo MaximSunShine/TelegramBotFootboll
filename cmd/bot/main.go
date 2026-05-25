@@ -1,7 +1,6 @@
 package main
 
 import (
-	"TelegramBotFootboll/internal/model"
 	"context"
 	"log/slog"
 	"os"
@@ -9,9 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"TelegramBotFootboll/internal/bot"
-	"TelegramBotFootboll/internal/config"
-	"TelegramBotFootboll/internal/repository/postgres"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
+
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/config"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/repository/postgres"
 )
 
 func main() {
@@ -50,10 +50,10 @@ func main() {
 	// 6. Создаём сервисы
 	// predictSvc := service.NewPredictService(userRepo, matchRepo, predictionRepo)
 	// Заглушка для компиляции:
-	predictSvc := &stubPredictService{}
+	//predictSvc := &stubPredictService{}
 
 	// 7. Создаём и запускаем бота
-	telegramBot, err := bot.New(cfg.TelegramBotToken, predictSvc, logger)
+	//telegramBot, err := bot.New(cfg.TelegramBotToken, predictSvc, logger)
 	if err != nil {
 		logger.Error("❌ Failed to create bot", "error", err)
 		os.Exit(1)

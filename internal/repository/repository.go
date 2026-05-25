@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"TelegramBotFootboll/internal/model"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
 )
 
 // UserRepository определяет методы для работы с пользователями
