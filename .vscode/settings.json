@@ -1,0 +1,23 @@
+/*{
+  "gopls": {
+    "usePlaceholders": false,
+    "staticcheck": true,
+    // "vulncheck": "Imports"
+  },
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": [
+    "--fast"
+  ],
+  "go.testFlags": [
+    "-v",
+    "-race"
+  ],
+  "go.buildFlags": [
+    "-tags=dev"
+  ],
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
+}*/
