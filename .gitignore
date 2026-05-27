@@ -12,9 +12,9 @@ pkg/
 coverage.out
 
 # Environment
-.env.example
 .env
 *.env
+!.env.example
 
 # IDE
 .idea/
