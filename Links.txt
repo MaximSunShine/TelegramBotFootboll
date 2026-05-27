@@ -11,3 +11,7 @@ https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439
 https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/docker-ñompose.yml
 https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/go.mod
 https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/makefile
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/4c1078a31e6d016f73cf5e2fa4890172cc80adcb/migrations/.gitignore
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/4c1078a31e6d016f73cf5e2fa4890172cc80adcb/migrations/000001_init_schema.down.sql
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/4c1078a31e6d016f73cf5e2fa4890172cc80adcb/migrations/000001_init_schema.up.sql
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/4c1078a31e6d016f73cf5e2fa4890172cc80adcb/migrations/golangci.yml
