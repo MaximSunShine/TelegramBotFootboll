@@ -44,14 +44,14 @@ func main() {
 	logger.Info("✅ Connected to PostgreSQL")
 
 	// 5. Создаём репозитории
-	userRepo := postgres.NewUserRepo(pool)
-	// matchRepo := postgres.NewMatchRepo(pool)  // реализуй аналогично
-	// predictionRepo := postgres.NewPredictionRepo(pool)
+	//userRepo := postgres.NewUserRepo(pool)
+	//matchRepo := postgres.NewMatchRepo(pool) // реализуй аналогично
+	//predictionRepo := postgres.NewPredictionRepo(pool)
 
 	// 6. Создаём сервисы
-	// predictSvc := service.NewPredictService(userRepo, matchRepo, predictionRepo)
+	//predictSvc := service.NewPredictService(userRepo, matchRepo, predictionRepo)
 	// Заглушка для компиляции:
-	//predictSvc := &stubPredictService{}
+	predictSvc := &stubPredictService{}
 
 	// 7. Создаём и запускаем бота
 	telegramBot, err := bot.New(cfg.TelegramBotToken, predictSvc, logger)
