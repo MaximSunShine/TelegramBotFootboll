@@ -8,6 +8,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/bot"
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
 
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/config"
@@ -53,7 +54,7 @@ func main() {
 	//predictSvc := &stubPredictService{}
 
 	// 7. Создаём и запускаем бота
-	//telegramBot, err := bot.New(cfg.TelegramBotToken, predictSvc, logger)
+	telegramBot, err := bot.New(cfg.TelegramBotToken, predictSvc, logger)
 	if err != nil {
 		logger.Error("❌ Failed to create bot", "error", err)
 		os.Exit(1)
@@ -73,10 +74,6 @@ func main() {
 	/*shutdownCtx*/
 	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-
-	if err := pool.Close(); err != nil {
-		logger.Error("⚠️ Failed to close database pool", "error", err)
-	}
 
 	logger.Info("✅ Application stopped")
 }

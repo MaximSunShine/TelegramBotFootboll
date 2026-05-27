@@ -1,0 +1,13 @@
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/cmd/bot/main.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/bot/bot.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/config/config.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/model/match.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/model/prediction.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/model/user.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/repository/repository.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/service/predict.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/internal/service/service.go
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/README.md
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/docker-ñompose.yml
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/go.mod
+https://github.com/MaximSunShine/TelegramBotFootboll/blob/dc8c67de9946c06b632439bd3e4332bc54429f13/makefile
