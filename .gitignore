@@ -38,5 +38,5 @@ logs/
 # Docker
 docker-compose.override.yml
 
-#ather
-links.txt
+#links
+permalinks.txt
