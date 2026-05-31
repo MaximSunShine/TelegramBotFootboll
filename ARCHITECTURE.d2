@@ -1,0 +1,97 @@
+direction: down
+
+# === 1. ОПРЕДЕЛЕНИЕ СТИЛЕЙ (КЛАССЫ) ===
+# Это позволяет менять дизайн в одном месте
+class: {
+  external: {
+    style.fill: "#f4f4f5"       # Серый фон
+    style.stroke: "#71717a"     # Серая граница
+    style.stroke-width: 2
+  }
+  core: {
+    style.fill: "#e0f2fe"       # Голубой фон
+    style.stroke: "#0284c7"     # Синяя граница
+    style.stroke-width: 2
+  }
+  service: {
+    style.fill: "#dcfce7"       # Зеленый фон
+    style.stroke: "#16a34a"     # Зеленая граница
+    style.stroke-width: 2
+  }
+  db: {
+    style.fill: "#ffedd5"       # Оранжевый фон
+    style.stroke: "#ea580c"     # Оранжевая граница
+    style.stroke-width: 2
+  }
+  entry: {
+    style.fill: "#18181b"       # Темный фон (для main)
+    style.stroke: "#52525b"
+    style.font-color: "#ffffff" # Белый текст
+    style.stroke-width: 3
+  }
+}
+
+# === 2. КОМПОНЕНТЫ ===
+
+# Внешний мир
+User: "👤 Пользователь" { class: external }
+Telegram: "☁️ Telegram Cloud" { class: external }
+SStats: "📊 SStats API" { class: external }
+
+# База данных
+DB: "🐘 PostgreSQL" { class: db }
+
+# Наше Приложение
+App: "📦 TelegramBotFootboll (Go Binary)" {
+  style.fill: "#ffffff"
+  style.stroke: "#3f3f46"
+  style.stroke-width: 3
+
+  # Адаптер (Bot)
+  BotLayer: "internal/bot" {
+    class: core
+    Handlers: "Command Handlers\n(/start, /predict)"
+  }
+
+  # Бизнес-логика (Service)
+  ServiceLayer: "internal/service" {
+    class: service
+    Logic: "PredictService\n& Validation"
+  }
+
+  # Доступ к данным (Repository)
+  RepoLayer: "internal/repository" {
+    class: core
+    Impl: "Postgres Implementation\n(pgx)"
+  }
+
+  # Модели
+  Models: "internal/model" {
+    style.fill: "#f3e8ff"
+    style.stroke: "#9333ea"
+    style.stroke-width: 2
+    label: "💎 Structs (User, Match)"
+  }
+}
+
+# Точка входа
+Main: "cmd/bot/main.go" { class: entry }
+
+# === 3. СВЯЗИ (FLOW) ===
+
+# Основной поток данных
+User -> Telegram: "Отправляет сообщение"
+Telegram -> App.BotLayer.Handlers: "Получает Update"
+
+App.BotLayer.Handlers -> App.ServiceLayer.Logic: "Вызывает бизнес-логику"
+App.ServiceLayer.Logic -> App.RepoLayer.Impl: "Сохраняет/Читает данные"
+App.RepoLayer.Impl -> DB: "SQL Запрос"
+
+# Внешние вызовы и модели
+App.ServiceLayer.Logic -> SStats: "Загружает матчи"
+App.ServiceLayer.Logic -> App.Models: "Использует структуры"
+
+# Инициализация (Dependency Injection) - пунктиром
+Main -> App.BotLayer: "Создает и inject" { style.stroke-dash: 4 }
+Main -> App.ServiceLayer: "Создает и inject" { style.stroke-dash: 4 }
+Main -> App.RepoLayer: "Создает и inject" { style.stroke-dash: 4 }
