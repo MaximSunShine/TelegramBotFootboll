@@ -5,17 +5,21 @@ import (
 	"time"
 )
 
+// Score представляет счёт матча (для внешнего API)
+type Score struct {
+	Home int `json:"home"`
+	Away int `json:"away"`
+}
+
 // Match представляет футбольный матч
 type Match struct {
-	ID        int64     `json:"id"`
+	ID        int64     `json:"match_id"` // ID из внешнего API
 	HomeTeam  string    `json:"home_team"`
 	AwayTeam  string    `json:"away_team"`
-	League    string    `json:"league"`
-	StartedAt time.Time `json:"started_at"`
-	Status    string    `json:"status"` // scheduled, live, finished
-	HomeScore *int      `json:"home_score"`
+	StartTime time.Time `json:"start_time"` // ← было StartAt, переименовали
+	Status    string    `json:"status"`     // scheduled, live, finished
+	HomeScore *int      `json:"home_score"` // nullable (матч ещё не сыгран)
 	AwayScore *int      `json:"away_score"`
-	SStatsID  int64     `json:"sstats_id"` // ID во внешнем API
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }

@@ -59,7 +59,7 @@ func (s *predictService) SubmitPrediction(
 		return fmt.Errorf("%w: %v", ErrMatchNotFound, err)
 	}
 
-	if match.StartedAt.Before(time.Now()) {
+	if match.StartTime.Before(time.Now()) {
 		return ErrMatchAlreadyStarted
 	}
 
@@ -70,12 +70,17 @@ func (s *predictService) SubmitPrediction(
 		return ErrPredictionExists
 	}
 
+	// Сначала распарсим счёт "2:1" → 2 и 1
+	parts := strings.Split(score, ":")
+	predHome, _ := strconv.Atoi(parts[0])
+	predAway, _ := strconv.Atoi(parts[1])
 	// 4. Создаём прогноз
 	pred := &model.Prediction{
-		UserID:    userID,
-		MatchID:   matchID,
-		Predicted: fmt.Sprintf("%d:%d", home, away),
-		CreatedAt: time.Now(),
+		UserID:        userID,
+		MatchID:       matchID,
+		PredictedHome: home,
+		PredictedAway: away,
+		CreatedAt:     time.Now(),
 	}
 
 	if err := s.predictionRepo.Create(ctx, pred); err != nil {
