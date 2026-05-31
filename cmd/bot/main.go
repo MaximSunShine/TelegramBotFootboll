@@ -10,6 +10,7 @@ import (
 
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/bot"
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
+	"github.com/MaximSunShine/TelegramBotFootboll/internal/service"
 
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/config"
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/repository/postgres"
@@ -44,14 +45,19 @@ func main() {
 	logger.Info("✅ Connected to PostgreSQL")
 
 	// 5. Создаём репозитории
-	//userRepo := postgres.NewUserRepo(pool)
-	//matchRepo := postgres.NewMatchRepo(pool) // реализуй аналогично
-	//predictionRepo := postgres.NewPredictionRepo(pool)
+	userRepo := postgres.NewUserRepo(pool)
+	matchRepo := postgres.NewMatchRepo(pool)
+	predictionRepo := postgres.NewPredictionRepo(pool)
 
 	// 6. Создаём сервисы
-	//predictSvc := service.NewPredictService(userRepo, matchRepo, predictionRepo)
-	// Заглушка для компиляции:
-	predictSvc := &stubPredictService{}
+	predictSvc := service.NewPredictService(userRepo, matchRepo, predictionRepo)
+
+	// 7. Создаём клиент внешнего API
+	sstatsClient := service.NewSStatsClient(cfg.SStatsAPIBase, cfg.SStatsAPIKey)
+
+	// 8. Запускаем фоновый синхронизатор
+	syncWorker := service.NewSyncWorker(logger, matchRepo, predictionRepo, sstatsClient, 1*time.Hour)
+	go syncWorker.Run(ctx) // не блокирует main
 
 	// 7. Создаём и запускаем бота
 	telegramBot, err := bot.New(cfg.TelegramBotToken, predictSvc, logger)

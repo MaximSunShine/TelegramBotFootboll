@@ -54,11 +54,11 @@ build:
 
 docker-up:
 	@echo "$(GREEN)🐳 Поднимаем инфраструктуру...$(NC)"
-	docker-compose up -d postgres
+	docker compose up -d postgres
 
 docker-down:
 	@echo "$(GREEN)🛑 Останавливаем инфраструктуру...$(NC)"
-	docker-compose down
+	docker compose down
 
 .PHONY: permalinks
 permalinks:
