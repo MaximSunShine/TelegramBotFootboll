@@ -59,3 +59,7 @@ docker-up:
 docker-down:
 	@echo "$(GREEN)🛑 Останавливаем инфраструктуру...$(NC)"
 	docker-compose down
+
+.PHONY: permalinks
+permalinks:
+	go run cmd/permalinks/main.go $(REPO) -b $(BRANCH) -ext .go -o permalinks.txt
