@@ -4,6 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"regexp"
+	"strconv"
+	"strings"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 
@@ -154,12 +157,23 @@ func (b *Bot) sendMessage(chatID int64, text string) {
 
 // parsePredictArgs парсит аргументы команды /predict
 func parsePredictArgs(args string) (matchID int64, score string, err error) {
-	// args: "123 2:1"
-	// Ожидаем: <match_id> <predicted_score>
+	// Ожидаем: "123 2:1" или "123 2-1"
+	parts := strings.Fields(args)
+	if len(parts) != 2 {
+		return 0, "", fmt.Errorf("ожидалось два аргумента: <match_id> <счёт>")
+	}
 
-	// Простой парсинг: разделяем по пробелам
-	// В реальном проекте можно использовать regexp для большей надёжности
-	// ... (реализуй как упражнение)
+	// Парсим ID матча
+	matchID, err = strconv.ParseInt(parts[0], 10, 64)
+	if err != nil {
+		return 0, "", fmt.Errorf("неверный ID матча: %w", err)
+	}
 
-	return 0, "", fmt.Errorf("not implemented")
+	// Валидируем формат счёта (2:1 или 2-1)
+	score = strings.Replace(parts[1], "-", ":", 1)
+	if matched, _ := regexp.MatchString(`^\d+:\d+$`, score); !matched {
+		return 0, "", fmt.Errorf("неверный формат счёта, используйте 2:1")
+	}
+
+	return matchID, score, nil
 }

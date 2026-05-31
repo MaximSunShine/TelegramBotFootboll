@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/bot"
-	"github.com/MaximSunShine/TelegramBotFootboll/internal/model"
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/service"
 
 	"github.com/MaximSunShine/TelegramBotFootboll/internal/config"
@@ -59,7 +58,7 @@ func main() {
 	syncWorker := service.NewSyncWorker(logger, matchRepo, predictionRepo, sstatsClient, 1*time.Hour)
 	go syncWorker.Run(ctx) // не блокирует main
 
-	// 7. Создаём и запускаем бота
+	// 9. Создаём и запускаем бота
 	telegramBot, err := bot.New(cfg.TelegramBotToken, predictSvc, logger)
 	if err != nil {
 		logger.Error("❌ Failed to create bot", "error", err)
@@ -68,13 +67,13 @@ func main() {
 
 	logger.Info("🤖 Bot created, starting update loop...")
 
-	// 8. Запускаем бота с таймаутом на остановку
+	// 10. Запускаем бота с таймаутом на остановку
 	if err := telegramBot.Run(ctx); err != nil {
 		logger.Error("❌ Bot runtime error", "error", err)
 		os.Exit(1)
 	}
 
-	// 9. Graceful shutdown
+	// 11. Graceful shutdown
 	logger.Info("👋 Graceful shutdown...")
 
 	/*shutdownCtx*/
@@ -98,20 +97,4 @@ func parseLogLevel(level string) slog.Level {
 	default:
 		return slog.LevelInfo
 	}
-}
-
-// stubPredictService — заглушка для компиляции, пока не реализованы все репозитории
-// Удали этот код, когда реализуешь полноценные репозитории
-type stubPredictService struct{}
-
-func (s *stubPredictService) SubmitPrediction(ctx context.Context, userID, matchID int64, score string) error {
-	return nil
-}
-
-func (s *stubPredictService) CalculateScore(predicted, actual string) (int, error) {
-	return 0, nil
-}
-
-func (s *stubPredictService) GetUserPredictions(ctx context.Context, userID int64, limit int) ([]*model.Prediction, error) {
-	return nil, nil
 }
