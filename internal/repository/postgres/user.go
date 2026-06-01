@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
@@ -39,6 +40,26 @@ func (r *userRepository) GetByID(ctx context.Context, id int64) (*model.User, er
 		return nil, fmt.Errorf("failed to get user: %w", err)
 	}
 
+	return &u, nil
+}
+
+// GetByUsername находит пользователя по имени (username)
+func (r *userRepository) GetByUsername(ctx context.Context, username string) (*model.User, error) {
+	const query = `
+		SELECT user_id, username, first_name, last_name, created_at, updated_at
+		FROM users
+		WHERE username = $1
+	`
+	var u model.User
+	err := r.pool.QueryRow(ctx, query, username).Scan(
+		&u.ID, &u.Username, &u.FirstName, &u.LastName, &u.CreatedAt, &u.UpdatedAt,
+	)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, nil // не найдено — это не ошибка
+		}
+		return nil, fmt.Errorf("UserRepo.GetByUsername: %w", err)
+	}
 	return &u, nil
 }
 
@@ -84,4 +105,34 @@ func (r *userRepository) Update(ctx context.Context, user *model.User) error {
 	}
 
 	return nil
+}
+
+// internal/repository/postgres/user.go
+
+// ListActive возвращает список активных пользователей (кто делал прогнозы за последние 30 дней)
+func (r *userRepository) ListActive(ctx context.Context, limit int) ([]*model.User, error) {
+	const query = `
+		SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, u.created_at, u.updated_at
+		FROM users u
+		INNER JOIN predictions p ON u.user_id = p.user_id
+		WHERE p.created_at > NOW() - INTERVAL '30 days'
+		ORDER BY p.created_at DESC
+		LIMIT $1
+	`
+	rows, err := r.pool.Query(ctx, query, limit)
+	if err != nil {
+		return nil, fmt.Errorf("UserRepo.ListActive: %w", err)
+	}
+	defer rows.Close()
+
+	var users []*model.User
+	for rows.Next() {
+		var u model.User
+		err := rows.Scan(&u.ID, &u.Username, &u.FirstName, &u.LastName, &u.CreatedAt, &u.UpdatedAt)
+		if err != nil {
+			return nil, fmt.Errorf("UserRepo.ListActive scan: %w", err)
+		}
+		users = append(users, &u)
+	}
+	return users, rows.Err()
 }

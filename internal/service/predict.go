@@ -70,16 +70,13 @@ func (s *predictService) SubmitPrediction(
 		return ErrPredictionExists
 	}
 
-	// Сначала распарсим счёт "2:1" → 2 и 1
-	parts := strings.Split(score, ":")
-	predHome, _ := strconv.Atoi(parts[0])
-	predAway, _ := strconv.Atoi(parts[1])
 	// 4. Создаём прогноз
 	pred := &model.Prediction{
 		UserID:        userID,
 		MatchID:       matchID,
 		PredictedHome: home,
 		PredictedAway: away,
+		Points:        0,
 		CreatedAt:     time.Now(),
 	}
 
